@@ -110,7 +110,7 @@ const App = () => {
           );
           setNonce(nonce);
 
-          const REDIRECT_URI = "http://localhost:5173/";
+          const REDIRECT_URI = location.origin + "/";
 
           const params = new URLSearchParams({
             // See below for how to configure client ID and redirect URL
@@ -222,6 +222,8 @@ const App = () => {
         });
 
         console.log("userSignature:", userSignature);
+
+        console.log("jwt token decoded : ", decodedToken);
 
         // Generate addressSeed using userSalt, sub, and aud (JWT Payload)
         // as parameters for obtaining zkLoginSignature
