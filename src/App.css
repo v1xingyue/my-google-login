@@ -1,0 +1,30 @@
+#root {
+  margin: 0 auto;
+  word-wrap: break-word;
+  width: 80%;
+}
+
+.card {
+  padding: 1em;
+  border-radius: 2rem;
+  border:1px solid #ccc;
+  margin-top: 1rem;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+a.inline-link{
+  margin-left: 2rem;
+}
+
+span.bold {
+  margin-left: 1rem;
+  font-weight: bold;
+}
+
+h2 {
+  text-align: center;
+}
+
