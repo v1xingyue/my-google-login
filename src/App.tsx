@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import "./App.css";
 import { Ed25519Keypair } from "@mysten/sui.js/keypairs/ed25519";
 import { fromB64 } from "@mysten/bcs";
+import "./App.css";
 import {
   generateRandomness,
   generateNonce,
@@ -49,6 +49,8 @@ const App = () => {
   const [balance, setBalance] = useState<CoinBalance | null>(null);
   const [transactionResult, setTransactionResult] =
     useState<SuiTransactionBlockResponse | null>(null);
+  const [error, setError] = useState("");
+  const [txB64, setTxB64] = useState("");
 
   useEffect(() => {
     if (!ephemeralKeypair) {
@@ -144,7 +146,7 @@ const App = () => {
           console.log("decoded token : ", decoded);
           setDecodedToken(decoded);
 
-          if (userSalt == "") {
+          if (userSalt != "") {
             const owner = jwtToAddress(idToken as string, userSalt);
             setZkLoginUserAddress(owner);
 
@@ -209,7 +211,6 @@ const App = () => {
     if (zkLoginAddress != "" && ephemeralKeypair != null && zkProof != null) {
       const maxEpoch = Number(localStorage.getItem("maxEpoch"));
       const txb = new TransactionBlock();
-
       txb.setSender(zkLoginAddress);
       const client = new SuiClient({
         url: FULLNODE_URL,
@@ -220,6 +221,10 @@ const App = () => {
           client,
           signer: ephemeralKeypair,
         });
+
+        setTxB64(userSignature);
+
+        console.log("txb bytes : ", bytes);
 
         console.log("userSignature:", userSignature);
 
@@ -252,10 +257,9 @@ const App = () => {
           signature: zkLoginSignature,
         });
         console.log("exeucte : ", result);
-        alert(result);
         setTransactionResult(result);
       } catch (error) {
-        alert("error : " + error);
+        setError("error : " + error);
       }
     }
   };
@@ -280,6 +284,12 @@ const App = () => {
 
   return (
     <div className="App">
+      {error == "" ? null : (
+        <div className="error-card">
+          <p>{error}</p>
+        </div>
+      )}
+
       <div className="card">
         <h2>Prepare Login with Google!</h2>
         {ephemeralKeypair ? (
@@ -289,6 +299,10 @@ const App = () => {
               {ephemeralKeypair.export().privateKey}
               <span className="bold">public: </span>
               {ephemeralKeypair.getPublicKey().toBase64()}{" "}
+            </p>
+            <p>
+              <span className="bold">fake address: </span>{" "}
+              {ephemeralKeypair.getPublicKey().toSuiAddress()}
             </p>
           </div>
         ) : null}
@@ -318,6 +332,7 @@ const App = () => {
             </button>
             <button onClick={doTransaction}>Test Transaction</button>
           </p>
+          {txB64 == "" ? null : txB64}
           {transactionResult ? (
             <p>{JSON.stringify(transactionResult)}</p>
           ) : zkProof == null ? null : (

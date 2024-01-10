@@ -6,9 +6,17 @@
 
 .card {
   padding: 1em;
-  border-radius: 2rem;
+  border-radius: 1rem;
   border:1px solid #ccc;
   margin-top: 1rem;
+}
+
+.error-card {
+  padding: 0.5rem;
+  border-radius: 1rem;
+  border:1px solid red;
+  margin-top: 1rem;
+  color: red;
 }
 
 .read-the-docs {
