@@ -6,10 +6,11 @@
   }
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
+@media (prefers-color-scheme: light) {
+  body {
+      background-color: white;
+      color: black;
+  }
 }
 
 a {
@@ -17,6 +18,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }

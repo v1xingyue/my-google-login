@@ -7,8 +7,9 @@
 .card {
   padding: 1em;
   border-radius: 1rem;
-  border:1px solid #ccc;
   margin-top: 1rem;
+  border: 2px solid #81c9f9; /* 蓝色边框 */
+  box-shadow: 0 0 10px #3498db; /* 蓝色外发光效果 */
 }
 
 .error-card {

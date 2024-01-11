@@ -119,7 +119,7 @@ const App = () => {
             client_id: ClientId,
             redirect_uri: REDIRECT_URI,
             response_type: "id_token",
-            scope: "openid",
+            scope: "openid email",
             // See below for details about generation of the nonce
             nonce: nonce,
           });
